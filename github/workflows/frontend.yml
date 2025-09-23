@@ -9,6 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VITE_APP_X_KEY: ${{ secrets.VITE_APP_X_KEY }}
+      VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
+      API_VERSION: ${{ secrets.VITE_API_VERSION }}
+
     defaults:
       run:
         working-directory: frontend
