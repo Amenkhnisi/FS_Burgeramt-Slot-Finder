@@ -1,0 +1,30 @@
+# Node dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build output
+dist
+build
+
+# Environment files (use .env.production inside container instead)
+.env
+.env.local
+.env.development
+.env.test
+.env.*.local
+
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Logs
+*.log
+logs

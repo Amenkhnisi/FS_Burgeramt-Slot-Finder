@@ -1,0 +1,69 @@
+networks:
+  appnet:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - appnet
+
+  backend:
+    build: ./backend
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    networks:
+      - appnet
+
+  telegram_bot:
+    build: ./telegram_bot
+    restart: always
+    container_name: telegram_bot
+    env_file: ./.env # reuse same env (includes TELEGRAM_BOT_TOKEN + API_BASE)
+    depends_on:
+      - backend
+    volumes:
+      - ./telegram_bot:/app
+    networks:
+      - appnet
+
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: frontend-dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true # for Windows file change detection
+    env_file:
+      - ./.env
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+volumes:
+  pgdata:
+
+

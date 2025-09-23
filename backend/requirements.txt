@@ -1,0 +1,32 @@
+# --- Core framework ---
+fastapi
+uvicorn[standard]
+
+# --- Web scraping & parsing ---
+playwright
+beautifulsoup4
+lxml
+
+# --- Database & migrations ---
+sqlalchemy
+alembic
+psycopg2-binary     
+
+# --- Security & Auth ---
+python-jose[cryptography]   # JWT
+passlib[bcrypt]             # password hashing
+python-dotenv               # load .env configs
+
+# --- Rate limiting / API control ---
+slowapi
+
+# --- Scheduling ---
+apscheduler
+
+# --- Telegram integration ---
+python-telegram-bot
+
+# --- Utilities ---
+requests
+pydantic
+pydantic[email]

@@ -1,0 +1,5 @@
+aiogram
+apscheduler
+requests
+dotenv
+pydantic-settings
