@@ -29,4 +29,5 @@ jobs:
       - name: Run tests
         env:
           ACCESS_TOKEN_EXPIRE_MINUTES: 3060
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: pytest -s -vv
