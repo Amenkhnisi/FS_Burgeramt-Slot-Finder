@@ -31,6 +31,12 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
+      - name: Convert .env to Unix format
+        run: sed -i 's/\r$//' $HOME/secrets/.env
+
+      - name: Print one env var
+        run: echo "Loaded SECRET_KEY=$FRONTEND_URL"
+
       - name: Load .env into environment
         run: |
           set -a
