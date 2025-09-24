@@ -1,86 +1,122 @@
 import pytest
-from unittest.mock import patch, MagicMock
-from app.services.telegram_bot import send_message, get_updates, process_updates
+from fastapi.testclient import TestClient
+from unittest.mock import patch
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from datetime import datetime
+import zoneinfo
+import os
+
+from app.main import app
+from app.database import Base, get_db
+from app.utils.auth_utils import get_current_user  # adjust path as needed
+
+# Setup test DB
+SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={
+                       "check_same_thread": False})
+TestingSessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=engine)
+
+# Override DB dependency
 
 
-@pytest.fixture
-def mock_chat_id():
-    return "123456789"
+def override_get_db():
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
-@pytest.fixture
-def mock_text():
-    return "Hello, Amen!"
+app.dependency_overrides[get_db] = override_get_db
+client = TestClient(app)
 
 
-def test_send_message(mock_chat_id, mock_text):
-    with patch("app.services.telegram_bot.requests.post") as mock_post:
-        send_message(mock_chat_id, mock_text)
-        mock_post.assert_called_once()
-        args, kwargs = mock_post.call_args
-        assert "sendMessage" in args[0]
-        assert kwargs["data"]["chat_id"] == mock_chat_id
-        assert kwargs["data"]["text"] == mock_text
+API_VERSION = os.environ.get('API_VERSION')
 
 
-def test_get_updates_no_offset():
-    mock_response = {"result": [{"update_id": 1, "message": {
-        "chat": {"id": "123"}, "text": "/start uid_1"}}]}
-    with patch("app.services.telegram_bot.requests.get") as mock_get:
-        mock_get.return_value.json.return_value = mock_response
-        updates = get_updates()
-        assert isinstance(updates, list)
-        assert updates[0]["message"]["text"].startswith("/start")
+@pytest.fixture(scope="module", autouse=True)
+def setup_db():
+    Base.metadata.create_all(bind=engine)
+    yield
+    Base.metadata.drop_all(bind=engine)
+
+# Mock authenticated user
 
 
-def test_get_updates_with_offset():
-    mock_response = {"result": [{"update_id": 2}]}
-    with patch("app.services.telegram_bot.requests.get") as mock_get:
-        mock_get.return_value.json.return_value = mock_response
-        updates = get_updates(offset=2)
-        mock_get.assert_called_once()
-        assert updates[0]["update_id"] == 2
+def mock_user():
+    class User:
+        id = 1
+    return User()
 
 
-def test_process_updates_valid_user():
-    mock_update = {
-        "message": {
-            "chat": {"id": "123"},
-            "text": "/start uid_42"
-        }
-    }
+app.dependency_overrides[get_current_user] = lambda: mock_user()
 
-    mock_user = MagicMock()
-    mock_user.telegram_chat_id = None
-
-    mock_db = MagicMock()
-    mock_db.query().filter().first.return_value = mock_user
-
-    with patch("app.services.telegram_bot.get_updates", return_value=[mock_update]), \
-            patch("app.services.telegram_bot.SessionLocal", return_value=mock_db), \
-            patch("app.services.telegram_bot.send_message") as mock_send:
-
-        process_updates()
-        mock_db.commit.assert_called_once()
-        mock_send.assert_called_once_with(
-            "123", "✅ Connected! You'll now receive daily appointment notifications.")
+# Test registering a Telegram user
 
 
-def test_process_updates_invalid_user():
-    mock_update = {
-        "message": {
-            "chat": {"id": "123"},
-            "text": "/start uid_999"
-        }
-    }
+def test_register_telegram():
+    payload = {"user_id": 1, "chat_id": "123456"}
+    response = client.post(f"{API_VERSION}/telegram/register", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["msg"] == "Registered successfully"
+    assert data["chat_id"] == "123456"
 
-    mock_db = MagicMock()
-    mock_db.query().filter().first.return_value = None
+# Test Telegram me
 
-    with patch("app.services.telegram_bot.get_updates", return_value=[mock_update]), \
-            patch("app.services.telegram_bot.SessionLocal", return_value=mock_db), \
-            patch("app.services.telegram_bot.send_message") as mock_send:
 
-        process_updates()
-        mock_send.assert_called_once_with(
-            "123", "⚠️ Invalid link, please try again.")
+def test_get_my_telegram():
+    response = client.get(f"{API_VERSION}/telegram/me")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["chat_id"] == "123456"
+
+# Test updating notification time
+
+
+def test_update_notify_time():
+    payload = {"notify_time": "09:30"}
+    response = client.put(f"{API_VERSION}/telegram/time", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["notify_time"] == "09:30"
+
+
+# Test connecting Telegram
+def test_connect_telegram():
+    response = client.post(f"{API_VERSION}/telegram/connect")
+    assert response.status_code == 200
+    assert "deep_link" in response.json()
+    assert response.json()["deep_link"].startswith("https://t.me/")
+
+# Test getting all Telegram users
+
+
+def test_get_all_users():
+    response = client.get(f"{API_VERSION}/telegram/all-users")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert data[0]["chat_id"] == "123456"
+
+#  Test notify due (mocking the scraping function)
+
+
+@patch("app.routes.appointments.scrape_appointments_playwright_sync")
+def test_notify_due(mock_scrape):
+    mock_scrape.return_value = [{"date": "2025-09-25", "location": "Berlin"}]
+
+    # Set notify_time to current Berlin time
+    now_str = datetime.now(zoneinfo.ZoneInfo(
+        "Europe/Berlin")).strftime("%H:%M")
+    client.put(f"{API_VERSION}/telegram/time", json={"notify_time": now_str})
+
+    response = client.get(f"{API_VERSION}/telegram/notify-due?time={now_str}")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) > 0
+    assert "chat_id" in data[0]
+    assert isinstance(data[0]["slots"], list)
