@@ -14,7 +14,7 @@ import os
 
 
 PROJECT_ROOT = Path(os.getcwd())
-ENV_PATH = PROJECT_ROOT / ".env"
+ENV_PATH = PROJECT_ROOT / "../.env"
 
 if not ENV_PATH.exists():
     raise FileNotFoundError(f".env file not found at {ENV_PATH}")

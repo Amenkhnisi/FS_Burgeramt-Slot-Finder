@@ -1,6 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.orm import Session
-from datetime import timedelta
 from app.schemas import UserLogin, Token, UserCreate
 from app import crud
 from app.database import get_db
@@ -8,7 +7,6 @@ from app.utils.auth_utils import create_access_token, create_refresh_token
 from fastapi.responses import JSONResponse
 from app.config import JWT_SECRET, JWT_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from jose import jwt, JWTError
-from fastapi import Request
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 

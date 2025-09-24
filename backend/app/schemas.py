@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 
 
@@ -13,8 +13,7 @@ class UserOut(BaseModel):
     username: str
     email: Optional[EmailStr] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class Token(BaseModel):
@@ -41,5 +40,4 @@ class TelegramUserCreate(TelegramUserBase):
 class TelegramUserOut(TelegramUserBase):
     chat_id: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

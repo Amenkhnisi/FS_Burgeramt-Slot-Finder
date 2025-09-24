@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone as ti
 from jose import jwt, JWTError, ExpiredSignatureError
 from fastapi import HTTPException, Depends, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -15,7 +15,7 @@ security = HTTPBearer(auto_error=False)
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
-    expire = datetime.utcnow() + \
+    expire = datetime.now(ti.utc) + \
         (expires_delta if expires_delta else timedelta(
             minutes=int(ACCESS_TOKEN_EXPIRE_MINUTES)))
     to_encode.update({"exp": expire})
@@ -26,7 +26,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 # Utility function to create refresh tokens
 def create_refresh_token(data: dict, expires_days: int = 7) -> str:
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(days=expires_days)
+    expire = datetime.now(ti.utc) + timedelta(days=expires_days)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
     return encoded_jwt
