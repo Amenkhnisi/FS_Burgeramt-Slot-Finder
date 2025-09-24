@@ -9,7 +9,7 @@ import os
 
 from app.main import app
 from app.database import Base, get_db
-from app.utils.auth_utils import get_current_user  # adjust path as needed
+from app.utils.auth_utils import get_current_user
 
 # Setup test DB
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -33,6 +33,17 @@ app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 
+@pytest.fixture
+def override_auth():
+    class MockUser:
+        id = 1
+        username = "amen"
+        email = "amen@example.com"
+    app.dependency_overrides[get_current_user] = lambda: MockUser()
+    yield
+    app.dependency_overrides.pop(get_current_user, None)
+
+
 API_VERSION = os.environ.get('API_VERSION')
 
 
@@ -49,9 +60,6 @@ def mock_user():
     class User:
         id = 1
     return User()
-
-
-app.dependency_overrides[get_current_user] = lambda: mock_user()
 
 # Test registering a Telegram user
 
@@ -77,6 +85,8 @@ def test_get_my_telegram():
 
 
 def test_update_notify_time():
+    client.post(f"{API_VERSION}/telegram/register",
+                json={"user_id": 1, "chat_id": "123456"})
     payload = {"notify_time": "09:30"}
     response = client.put(f"{API_VERSION}/telegram/time", json=payload)
     assert response.status_code == 200
