@@ -16,8 +16,8 @@ import os
 PROJECT_ROOT = Path(os.getcwd())
 ENV_PATH = PROJECT_ROOT / "../.env"
 
-if not ENV_PATH.exists():
-    raise FileNotFoundError(f".env file not found at {ENV_PATH}")
+""" if not ENV_PATH.exists():
+    raise FileNotFoundError(f".env file not found at {ENV_PATH}") """
 
 # Load all env variables and override any existing ones
 load_dotenv(dotenv_path=ENV_PATH, override=True)
