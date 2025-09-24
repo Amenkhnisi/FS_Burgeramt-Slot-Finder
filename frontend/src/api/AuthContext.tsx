@@ -1,6 +1,6 @@
 // src/context/AuthContext.tsx
 import { createContext, useContext, useState, useEffect } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import api from "./api";
 
 interface User {
