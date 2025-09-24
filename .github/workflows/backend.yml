@@ -36,4 +36,6 @@ jobs:
       - name: Run tests
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
-        run: pytest -s -vv
+        run: |
+          pytest -s -vv
+          cat $HOME/secrets/my_secret.json
