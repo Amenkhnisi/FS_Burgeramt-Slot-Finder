@@ -25,8 +25,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code
 COPY ./app ./app
 
+# Copy Alembic config and migration scripts
+COPY alembic.ini .
+COPY ./migrations ./migrations
+
 # Set PYTHONPATH so imports work correctly
 ENV PYTHONPATH=/app
+
 
 # Default command: run migrations then start FastAPI
 CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
