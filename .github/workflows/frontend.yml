@@ -6,13 +6,14 @@ on:
       - "frontend/**"
       - ".github/workflows/frontend.yml"
 
+env:
+  VITE_APP_X_KEY: ${{ secrets.VITE_APP_X_KEY }}
+  VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
+  API_VERSION: ${{ secrets.VITE_API_VERSION }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      VITE_APP_X_KEY: ${{ secrets.VITE_APP_X_KEY }}
-      VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
-      API_VERSION: ${{ secrets.VITE_API_VERSION }}
 
     defaults:
       run:
@@ -37,3 +38,34 @@ jobs:
         with:
           name: frontend-dist
           path: dist
+
+  # Docker build and push only if tests pass
+
+  docker:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    needs: build
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          IMAGE_NAME=amenkhnissi/burgeramt-frontend
+          docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:${{ github.sha }} .
+
+      - name: Push Docker image
+        run: |
+          IMAGE_NAME=amenkhnissi/burgeramt-frontend
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:${{ github.sha }}
