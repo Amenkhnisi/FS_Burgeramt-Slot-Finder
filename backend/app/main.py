@@ -33,6 +33,7 @@ origins = [
     "http://127.0.0.1:5173",
     "http://127.0.0.1:3000",
     "http://localhost:3000",  # if you use CRA
+    "https://fs-burgeramt-slot-finder.vercel.app",  # Vercel frontend
 ]
 
 app.add_middleware(
@@ -70,6 +71,6 @@ app.include_router(
     telegram.router, prefix=f"/{API}")
 
 
-@app.get("/")
+@app.get("/{API}/health", tags=["Health"])
 def health_check():
     return {"status": "ok"}
