@@ -34,7 +34,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest -s -vv
+          python -m pytest -s -vv
 
       # Docker build and push only if tests pass
 
