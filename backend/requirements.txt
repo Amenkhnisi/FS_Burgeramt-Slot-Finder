@@ -16,6 +16,8 @@ psycopg2-binary
 python-jose[cryptography]   # JWT
 passlib[bcrypt]             # password hashing
 python-dotenv               # load .env configs
+bcrypt==4.1.2
+passlib==1.7.4
 
 # --- Rate limiting / API control ---
 slowapi
