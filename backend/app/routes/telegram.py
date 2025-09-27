@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app import crud, schemas,  models
-from app.utils.auth_utils import get_current_user
+from app.utils.auth_utils import get_current_user, verify_api_key
 import os
 import datetime as datetime
 import zoneinfo
@@ -28,7 +28,8 @@ def update_notify_time(payload: schemas.TelegramUserBase, user=Depends(get_curre
 
 
 @router.get("/me")
-def get_my_telegram(user=Depends(get_current_user), db: Session = Depends(get_db)):
+def get_my_telegram(user=Depends(get_current_user), db: Session = Depends(get_db),   # Enforce API key check
+                    ):
     tg = crud.get_telegram_user(db, user.id)
     if not tg:
         raise HTTPException(404, "Not registered in Telegram notifier")
@@ -87,7 +88,7 @@ def register_telegram(payload: dict, db: Session = Depends(get_db)):
 
 
 @router.get("/notify-due")
-def notify_due(time: str | None = None, db: Session = Depends(get_db)):
+def notify_due(time: str | None = None, db: Session = Depends(get_db), _: None = Depends(verify_api_key)):
     """
     Return all users whose notify_time matches the current Berlin time (HH:MM).
     If ?time=HH:MM is passed, it overrides (for debugging/testing).

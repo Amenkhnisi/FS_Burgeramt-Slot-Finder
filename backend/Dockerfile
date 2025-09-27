@@ -35,3 +35,5 @@ ENV PYTHONPATH=/app
 
 # Default command: run migrations then start FastAPI
 CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
+# Production command (uncomment to use in production)
+# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

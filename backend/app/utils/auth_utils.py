@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta, timezone as ti
 from jose import jwt, JWTError, ExpiredSignatureError
-from fastapi import HTTPException, Depends, Request
+from fastapi import HTTPException, Depends, Request, Header
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
-from app.config import JWT_SECRET, JWT_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.config import JWT_SECRET, JWT_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, API_KEY
 from app.database import get_db
 from app import crud
 from app.models import User
@@ -62,3 +62,10 @@ async def get_current_user(
         raise HTTPException(status_code=401, detail="User not found")
 
     return user
+
+# Validate Api Key
+
+
+def verify_api_key(x_api_key: str = Header(...)):
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API Key")

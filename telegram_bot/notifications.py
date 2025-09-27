@@ -2,8 +2,15 @@ import logging
 import requests
 from datetime import datetime
 import zoneinfo
+from config import Settings
+
+settings = Settings()
 
 berlin_tz = zoneinfo.ZoneInfo("Europe/Berlin")
+headers = {
+    # or "Authorization": f"Bearer {settings.api_key}"
+    "X-API-Key": settings.api_key
+}
 
 
 def send_daily_notifications(bot, settings):
@@ -13,7 +20,7 @@ def send_daily_notifications(bot, settings):
 
         try:
             resp = requests.get(
-                f"{settings.api_base}/{settings.api_version}/telegram/notify-due?time={now}", timeout=10)
+                f"{settings.api_base}/{settings.api_version}/telegram/notify-due?time={now}", headers=headers, timeout=30)
             if not resp.ok:
                 logging.warning("⚠️ Failed to fetch notify-due users")
                 return
