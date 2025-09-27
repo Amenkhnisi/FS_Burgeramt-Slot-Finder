@@ -10,6 +10,7 @@ import os
 from app.main import app
 from app.database import Base, get_db
 from app.utils.auth_utils import get_current_user
+from app.config import API_KEY
 
 # Setup test DB
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -31,6 +32,10 @@ def override_get_db():
 
 app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
+headers = {
+    # or "Authorization": f"Bearer {settings.api_key}"
+    "X-API-Key": API_KEY
+}
 
 
 @pytest.fixture
@@ -123,7 +128,8 @@ def test_notify_due(mock_scrape):
         "Europe/Berlin")).strftime("%H:%M")
     client.put(f"{API_VERSION}/telegram/time", json={"notify_time": now_str})
 
-    response = client.get(f"{API_VERSION}/telegram/notify-due?time={now_str}")
+    response = client.get(
+        f"{API_VERSION}/telegram/notify-due?time={now_str}", headers=headers)
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data, list)
