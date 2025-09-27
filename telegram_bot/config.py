@@ -10,4 +10,4 @@ class Settings(BaseSettings):
     telegram_bot_token: str
     api_key: str  # New field for API key
 
-    model_config = ConfigDict(env_file=".env")
+    model_config = ConfigDict(env_file="../.env")

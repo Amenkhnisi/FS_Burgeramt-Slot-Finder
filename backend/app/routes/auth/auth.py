@@ -70,9 +70,6 @@ def logout(response: Response):
 def refresh_token(request: Request):
     refresh_token = request.cookies.get("refresh_token")
 
-    print("Refresh token from cookie:", refresh_token)
-    print(request.cookies.keys())  # Debug: print all cookie keys
-
     if not refresh_token:
         raise HTTPException(status_code=401, detail="Refresh token missing")
 
