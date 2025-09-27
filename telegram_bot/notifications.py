@@ -20,7 +20,7 @@ def send_daily_notifications(bot, settings):
 
         try:
             resp = requests.get(
-                f"{settings.api_base}/{settings.api_version}/telegram/notify-due?time={now}", headers=headers, timeout=30)
+                f"{settings.backend_url}/{settings.api_version}/telegram/notify-due?time={now}", headers=headers, timeout=30)
             if not resp.ok:
                 logging.warning("⚠️ Failed to fetch notify-due users")
                 return

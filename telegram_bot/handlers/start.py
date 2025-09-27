@@ -16,7 +16,7 @@ settings = Settings()
 # ==============================
 TELEGRAM_BOT_TOKEN = settings.telegram_bot_token
 API_VERSION = settings.api_version
-API_BASE = settings.api_base + "/" + API_VERSION
+API_BASE = settings.backend_url + "/" + API_VERSION
 # For local testing with backend on localhost, use:
 # API_BASE = "http://localhost:8000/" + API_VERSION
 

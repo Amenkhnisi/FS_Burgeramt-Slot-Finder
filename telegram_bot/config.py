@@ -3,11 +3,9 @@ from pydantic import ConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str
-    debug: bool = False
-    api_base: str
+    backend_url: str
     api_version: str = "api/v1"
     telegram_bot_token: str
     api_key: str  # New field for API key
 
-    model_config = ConfigDict(env_file="../.env")
+    model_config = ConfigDict(env_file=".env")
