@@ -71,6 +71,6 @@ app.include_router(
     telegram.router, prefix=f"/{API}")
 
 
-@app.get("/{API}/health", tags=["Health"])
+@app.get(f"/{API}/health", tags=["Health"])
 def health_check():
     return {"status": "ok"}
