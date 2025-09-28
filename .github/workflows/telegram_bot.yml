@@ -105,7 +105,7 @@ jobs:
           IMAGE_URI=${{ secrets.AWS_ECR_URI }}:${{ github.sha }}
           jq --arg IMAGE_URI "$IMAGE_URI" \
             '.containerDefinitions[0].image = $IMAGE_URI' \
-            task-definition.json > new-task-definition.json
+            task-definition.json > cleaned-task-definition.json
 
       - name: Register new task definition
         run: |
