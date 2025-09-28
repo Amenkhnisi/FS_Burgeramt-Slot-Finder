@@ -89,9 +89,16 @@ jobs:
       - name: Download task definition
         run: |
           aws ecs describe-task-definition \
-              --task-definition ${{ secrets.ECS_TASK_DEFINITION }} \
-              --query 'taskDefinition.{family:family, taskRoleArn:taskRoleArn, executionRoleArn:executionRoleArn, networkMode:networkMode, containerDefinitions:containerDefinitions, volumes:volumes, placementConstraints:placementConstraints, requiresCompatibilities:requiresCompatibilities, cpu:cpu, memory:memory}' \
-              --output json > task-definition.json
+          --task-definition ${{ secrets.ECS_TASK_DEFINITION }} \
+          --query 'taskDefinition.{family:family, taskRoleArn:taskRoleArn, executionRoleArn:executionRoleArn, networkMode:networkMode, containerDefinitions:containerDefinitions, volumes:volumes, placementConstraints:placementConstraints, requiresCompatibilities:requiresCompatibilities, cpu:cpu, memory:memory}' \
+          --output json > task-definition.json
+
+      - name: Clean task definition for re-registration
+        run: |
+          jq 'del(.taskRoleArn, .executionRoleArn) |
+              del(.volumes, .placementConstraints) |
+              del(.tags, .pidMode, .ipcMode, .proxyConfiguration, .inferenceAccelerators, .ephemeralStorage, .runtimePlatform, .enableFaultInjection)' \
+              task-definition.json > cleaned-task-definition.json
 
       - name: Update image in task definition
         run: |
