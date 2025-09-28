@@ -90,7 +90,7 @@ jobs:
         run: |
           aws ecs describe-task-definition \
             --task-definition ${{ secrets.ECS_TASK_DEFINITION }} \
-            --query taskDefinition \
+            --query 'taskDefinition | {family, taskRoleArn, executionRoleArn, networkMode, containerDefinitions, volumes, placementConstraints, requiresCompatibilities, cpu, memory}' \
             --output json > task-definition.json
 
       - name: Update image in task definition
