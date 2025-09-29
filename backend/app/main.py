@@ -4,7 +4,7 @@ from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.appointments import router as appt_router
-from app.routes import users, telegram
+from app.routes import users, telegram, summarize
 from app.routes.oauth import oauth, routes as oauthv2
 from app.routes.auth import auth
 from app.services.telegram_bot import process_updates
@@ -69,6 +69,8 @@ app.include_router(
     oauthv2.router, prefix=f"/{API}")
 app.include_router(
     telegram.router, prefix=f"/{API}")
+app.include_router(
+    summarize.router, prefix=f"/{API}")
 
 
 @app.get(f"/{API}/health", tags=["Health"])
