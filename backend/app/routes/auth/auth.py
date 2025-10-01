@@ -29,7 +29,7 @@ def register(user_in: UserCreate, response: Response, db: Session = Depends(get_
     # set HttpOnly cookie
     response.set_cookie(key="access_token", value=access_token,
                         httponly=True, samesite="lax")
-    return HTTPException(status_code=201, detail="User created successfully")
+    return {"access_token": access_token, "token_type": "bearer"}
 
 # New endpoint to login
 

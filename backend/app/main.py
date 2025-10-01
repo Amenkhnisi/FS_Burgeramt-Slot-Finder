@@ -73,6 +73,6 @@ app.include_router(
     summarize.router, prefix=f"/{API}")
 
 
-@app.get(f"/{API}/health", tags=["Health"])
+@app.get("/health", tags=["Health"])
 def health_check():
     return {"status": "ok"}
