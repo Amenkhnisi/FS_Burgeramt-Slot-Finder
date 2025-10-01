@@ -29,7 +29,7 @@ def register(user_in: UserCreate, response: Response, db: Session = Depends(get_
     # set HttpOnly cookie
     response.set_cookie(key="access_token", value=access_token,
                         httponly=True, samesite="lax")
-    return {"access_token": access_token, "token_type": "bearer"}
+    return HTTPException(status_code=201, detail="User created successfully")
 
 # New endpoint to login
 
@@ -58,9 +58,9 @@ def login(user_in: UserLogin, db: Session = Depends(get_db)):
 @router.post("/logout")
 def logout(response: Response):
     response = JSONResponse(content={"message": "Logged out"})
-    response.delete_cookie("access_token", path="/")
+    response.delete_cookie("access_token")
     # If using refresh tokens
-    response.delete_cookie("refresh_token", path="/")
+    response.delete_cookie("refresh_token")
     return response
 
 # New endpoint to refresh tokens
