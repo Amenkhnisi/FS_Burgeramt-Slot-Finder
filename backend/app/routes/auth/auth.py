@@ -5,7 +5,7 @@ from app import crud
 from app.database import get_db
 from app.utils.auth_utils import create_access_token, create_refresh_token
 from fastapi.responses import JSONResponse
-from app.config import JWT_SECRET, JWT_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.config import JWT_SECRET, JWT_ALGORITHM
 from jose import jwt, JWTError
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
@@ -46,10 +46,26 @@ def login(user_in: UserLogin, db: Session = Depends(get_db)):
     refresh_token = create_refresh_token({"sub": str(user.id)}, expires_days=7)
 
     response = JSONResponse(content={"message": "Login successful"})
-    response.set_cookie("access_token", access_token, httponly=True,
-                        secure=True, samesite="None", max_age=900)
-    response.set_cookie("refresh_token", refresh_token, httponly=True,
-                        secure=True, samesite="None", max_age=604800)
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=True,         # 🔐 Only send over HTTPS
+        samesite="strict",   # 🚫 Prevent cross-site requests
+        max_age=3600,        # ⏳ Optional: 1 hour expiry
+        path="/",            # 📍 Cookie applies to all routes
+    )
+
+    # If using refresh tokens
+    response.set_cookie(
+        key="refresh_token",
+        value=refresh_token,
+        httponly=True,
+        secure=True,         # 🔐 Only send over HTTPS
+        samesite="strict",   # 🚫 Prevent cross-site requests
+        max_age=3600,        # ⏳ Optional: 1 hour expiry
+        path="/",            # 📍 Cookie applies to all routes
+    )
     return response
 
 # New endpoint to logout
@@ -58,9 +74,18 @@ def login(user_in: UserLogin, db: Session = Depends(get_db)):
 @router.post("/logout")
 def logout(response: Response):
     response = JSONResponse(content={"message": "Logged out"})
-    response.delete_cookie("access_token")
+    response.delete_cookie(
+        key="access_token",
+        path="/",
+        samesite="strict"
+    )
     # If using refresh tokens
-    response.delete_cookie("refresh_token")
+    response.delete_cookie(
+        key="refresh_token",
+        path="/",
+        samesite="strict"
+    )
+    print("Cookies after logout:", response.headers.get("set-cookie"))
     return response
 
 # New endpoint to refresh tokens
@@ -84,6 +109,13 @@ def refresh_token(request: Request):
         {"sub": str(user_id)})
 
     response = JSONResponse(content={"message": "Token refreshed"})
-    response.set_cookie("access_token", new_access_token,
-                        httponly=True, secure=True, samesite="Strict", max_age=900)
+    response.set_cookie(
+        key="access_token",
+        value=new_access_token,
+        httponly=True,
+        secure=True,         # 🔐 Only send over HTTPS
+        samesite="strict",   # 🚫 Prevent cross-site requests
+        max_age=3600,        # ⏳ Optional: 1 hour expiry
+        path="/",            # 📍 Cookie applies to all routes
+    )
     return response
