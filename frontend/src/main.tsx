@@ -11,6 +11,7 @@ import { AuthProvider } from "./api/AuthContext.tsx";
 import DashboardLayout from "./components/ui/DashboardLayout.tsx";
 import Overview from "./components/ui/Overview.tsx";
 import ConnectTelegram from "./components/ui/ConnectTelegram.tsx";
+import SimplifyText from "./components/ui/SimplifyText.tsx";
 
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
           { index: true, element: <Overview /> },
           { path: "appointments", element: <Services /> },
           { path: "TelegramBot", element: <ConnectTelegram /> },
+          { path: "Ai-simplifier", element: <SimplifyText /> }
         ],
       },
     ],

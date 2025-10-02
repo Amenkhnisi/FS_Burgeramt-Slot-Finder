@@ -49,21 +49,39 @@ export default function DashboardLayout() {
                         className="block p-3 rounded-xl hover:bg-blue-100 transition"
                         onClick={() => setSidebarOpen(false)}
                     >
-                        🏠 Übersicht
+                        <div className="inline-flex items-center gap-2">
+
+                            <img width="48" height="48" src="https://img.icons8.com/fluency/48/overview-pages-2.png" alt="overview-pages-2" /> Übersicht                        </div>
+
                     </Link>
                     <Link
                         to="/dashboard/appointments"
                         className="block p-3 rounded-xl hover:bg-blue-100 transition"
                         onClick={() => setSidebarOpen(false)}
                     >
-                        📅 Termine
+                        <div className="inline-flex items-center gap-2">
+
+                            <img width="48" height="48" src="https://img.icons8.com/fluency/48/tear-off-calendar.png" alt="tear-off-calendar" /> Termine                        </div>
+
                     </Link>
                     <Link
                         to="/dashboard/TelegramBot"
                         className="block p-3 rounded-xl hover:bg-blue-100 transition"
                         onClick={() => setSidebarOpen(false)}
                     >
-                        ⚙️ Telegram Bot
+                        <div className="inline-flex items-center gap-2">
+
+                            <img width="48" height="48" src="https://img.icons8.com/color/48/telegram-app--v1.png" alt="telegram-app--v1" /> Telegram Bot                         </div>
+                    </Link>
+                    <Link
+                        to="/dashboard/Ai-simplifier"
+                        className="block p-3 rounded-xl hover:bg-blue-100 transition"
+                        onClick={() => setSidebarOpen(false)}
+                    >
+                        <div className="inline-flex items-center gap-2">
+
+                            <img width="48" height="48" src="https://img.icons8.com/color/48/bot.png" alt="bot" />  Ai Simplifier
+                        </div>
                     </Link>
                 </nav>
             </aside>

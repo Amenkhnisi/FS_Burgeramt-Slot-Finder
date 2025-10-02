@@ -9,15 +9,13 @@ export default function Overview() {
                     <ul className="space-y-1 text-gray-700">
                         <li><b>Title:</b> Bürgeramt Slot Finder</li>
                         <li><b>Version:</b> 1.0.0</li>
-                        <li><b>Stack:</b> React, FastAPI, PostgreSQL</li>
+                        <li><b>Stack:</b> React, FastAPI, PostgreSQL ,OpenAI</li>
                     </ul>
                 </div>
                 <div className="p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg hover:shadow-xl transition">
                     <h3 className="text-lg font-semibold mb-2">Next Features</h3>
                     <ul className="list-disc pl-6 text-gray-700">
-                        <li>Daily appointment notifications</li>
                         <li>Service/region selection</li>
-                        <li>Telegram integration</li>
                     </ul>
                 </div>
 
