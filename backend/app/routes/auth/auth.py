@@ -77,13 +77,15 @@ def logout(response: Response):
     response.delete_cookie(
         key="access_token",
         path="/",
-        samesite="None"
+        samesite="None",
+        secure=True
     )
     # If using refresh tokens
     response.delete_cookie(
         key="refresh_token",
         path="/",
-        samesite="None"
+        samesite="None",
+        secure=True
     )
     print("Cookies after logout:", response.headers.get("set-cookie"))
     return response
