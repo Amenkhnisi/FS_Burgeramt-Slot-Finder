@@ -28,7 +28,7 @@ def register(user_in: UserCreate, response: Response, db: Session = Depends(get_
     access_token = create_access_token({"sub": str(user.id)})
     # set HttpOnly cookie
     response.set_cookie(key="access_token", value=access_token,
-                        httponly=True, samesite="lax")
+                        httponly=True, samesite="None", secure=True)
     return {"access_token": access_token, "token_type": "bearer"}
 
 # New endpoint to login
@@ -51,7 +51,7 @@ def login(user_in: UserLogin, db: Session = Depends(get_db)):
         value=access_token,
         httponly=True,
         secure=True,         # 🔐 Only send over HTTPS
-        samesite="strict",   # 🚫 Prevent cross-site requests
+        samesite="None",   # 🚫 Prevent cross-site requests
         max_age=3600,        # ⏳ Optional: 1 hour expiry
         path="/",            # 📍 Cookie applies to all routes
     )
@@ -62,7 +62,7 @@ def login(user_in: UserLogin, db: Session = Depends(get_db)):
         value=refresh_token,
         httponly=True,
         secure=True,         # 🔐 Only send over HTTPS
-        samesite="strict",   # 🚫 Prevent cross-site requests
+        samesite="None",   # 🚫 Prevent cross-site requests
         max_age=3600,        # ⏳ Optional: 1 hour expiry
         path="/",            # 📍 Cookie applies to all routes
     )
@@ -77,13 +77,13 @@ def logout(response: Response):
     response.delete_cookie(
         key="access_token",
         path="/",
-        samesite="strict"
+        samesite="None"
     )
     # If using refresh tokens
     response.delete_cookie(
         key="refresh_token",
         path="/",
-        samesite="strict"
+        samesite="None"
     )
     print("Cookies after logout:", response.headers.get("set-cookie"))
     return response
@@ -114,7 +114,7 @@ def refresh_token(request: Request):
         value=new_access_token,
         httponly=True,
         secure=True,         # 🔐 Only send over HTTPS
-        samesite="strict",   # 🚫 Prevent cross-site requests
+        samesite="None",   # 🚫 Prevent cross-site requests
         max_age=3600,        # ⏳ Optional: 1 hour expiry
         path="/",            # 📍 Cookie applies to all routes
     )
