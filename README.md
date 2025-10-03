@@ -1,106 +1,147 @@
-<div align="center" class="text-center">
-<h1>FS_BURGERAMT-SLOT-FINDER</h1>
-<p><em>Find Slots Fast, Book with Confidence, Save Time</em></p>
+<!DOCTYPE html>
+<html lang="en">
 
-<img alt="last-commit" src="https://img.shields.io/github/last-commit/Amenkhnisi/FS_Burgeramt-Slot-Finder?style=flat&amp;logo=git&amp;logoColor=white&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="repo-top-language" src="https://img.shields.io/github/languages/top/Amenkhnisi/FS_Burgeramt-Slot-Finder?style=flat&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="repo-language-count" src="https://img.shields.io/github/languages/count/Amenkhnisi/FS_Burgeramt-Slot-Finder?style=flat&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
-<p><em>Built with the tools and technologies:</em></p>
-<img alt="JSON" src="https://img.shields.io/badge/JSON-000000.svg?style=flat&amp;logo=JSON&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="Markdown" src="https://img.shields.io/badge/Markdown-000000.svg?style=flat&amp;logo=Markdown&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="npm" src="https://img.shields.io/badge/npm-CB3837.svg?style=flat&amp;logo=npm&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="Autoprefixer" src="https://img.shields.io/badge/Autoprefixer-DD3735.svg?style=flat&amp;logo=Autoprefixer&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="SQLAlchemy" src="https://img.shields.io/badge/SQLAlchemy-D71F00.svg?style=flat&amp;logo=SQLAlchemy&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="PostCSS" src="https://img.shields.io/badge/PostCSS-DD3A0A.svg?style=flat&amp;logo=PostCSS&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt=".ENV" src="https://img.shields.io/badge/.ENV-ECD53F.svg?style=flat&amp;logo=dotenv&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&amp;logo=JavaScript&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="GNU%20Bash" src="https://img.shields.io/badge/GNU%20Bash-4EAA25.svg?style=flat&amp;logo=GNU-Bash&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-009688.svg?style=flat&amp;logo=FastAPI&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<br>
-<img alt="React" src="https://img.shields.io/badge/React-61DAFB.svg?style=flat&amp;logo=React&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED.svg?style=flat&amp;logo=Docker&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="Python" src="https://img.shields.io/badge/Python-3776AB.svg?style=flat&amp;logo=Python&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=flat&amp;logo=TypeScript&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="GitHub%20Actions" src="https://img.shields.io/badge/GitHub%20Actions-2088FF.svg?style=flat&amp;logo=GitHub-Actions&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="Zod" src="https://img.shields.io/badge/Zod-3E67B1.svg?style=flat&amp;logo=Zod&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="Vite" src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat&amp;logo=Vite&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="ESLint" src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=flat&amp;logo=ESLint&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="Axios" src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat&amp;logo=Axios&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-<img alt="Pydantic" src="https://img.shields.io/badge/Pydantic-E92063.svg?style=flat&amp;logo=Pydantic&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-</div>
-<br>
-<hr>
-<h2>Table of Contents</h2>
-<ul class="list-disc pl-4 my-0">
-<li class="my-0"><a href="#overview">Overview</a></li>
-<li class="my-0"><a href="#getting-started">Getting Started</a>
-<ul class="list-disc pl-4 my-0">
-<li class="my-0"><a href="#prerequisites">Prerequisites</a></li>
-<li class="my-0"><a href="#installation">Installation</a></li>
-<li class="my-0"><a href="#usage">Usage</a></li>
-<li class="my-0"><a href="#testing">Testing</a></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2>Overview</h2>
-<p>FS_Burgeramt-Slot-Finder is a powerful developer tool that simplifies the process of locating and managing Bürgeramt appointment slots through a fully integrated, containerized architecture. It combines real-time web scraping, a modern React frontend, and secure backend services to deliver a seamless scheduling experience.</p>
-<p><strong>Why FS_Burgeramt-Slot-Finder?</strong></p>
-<p>This project aims to streamline government appointment booking and notifications. The core features include:</p>
-<ul class="list-disc pl-4 my-0">
-<li class="my-0">🧪 <strong>Containerized Environment:</strong> Uses Docker Compose to orchestrate interconnected services, ensuring consistent development and deployment workflows.</li>
-<li class="my-0">⚙️ <strong>Real-Time Slot Discovery:</strong> Web scraping with Playwright and BeautifulSoup fetches up-to-date appointment data.</li>
-<li class="my-0">🎨 <strong>Modern Frontend:</strong> Built with React, TailwindCSS, and Vite for a fast, responsive user interface.</li>
-<li class="my-0">🔒 <strong>Secure Backend:</strong> Implements FastAPI with OAuth, user management, and database models for robust security.</li>
-<li class="my-0">📱 <strong>Telegram Integration:</strong> Automates notifications and user onboarding via Telegram bots for timely alerts.</li>
-<li class="my-0">🚀 <strong>Scalable Architecture:</strong> Designed for efficient development, deployment, and future feature expansion.</li>
-</ul>
-<hr>
+<body>
 
-<p><strong>Clone the repository:</strong></p>
-<pre><code class="language-sh">❯ git clone https://github.com/Amenkhnisi/FS_Burgeramt-Slot-Finder
-</code></pre>
-</li>
-<li class="my-0">
-<p><strong>Navigate to the project directory:</strong></p>
-<pre><code class="language-sh">❯ cd FS_Burgeramt-Slot-Finder
-</code></pre>
-</li>
-<li class="my-0">
-<p><strong>Install the dependencies:</strong></p>
-</li>
-</ol>
-<p><strong>Using <a href="https://www.docker.com/">docker</a>:</strong></p>
-<pre><code class="language-sh">❯ docker build -t Amenkhnisi/FS_Burgeramt-Slot-Finder .
-</code></pre>
-<p><strong>Using <a href="https://www.npmjs.com/">npm</a>:</strong></p>
-<pre><code class="language-sh">❯ npm install
-</code></pre>
-<p><strong>Using <a href="https://pypi.org/project/pip/">pip</a>:</strong></p>
-<pre><code class="language-sh">❯ pip install -r backend/requirements.txt, telegram_bot/requirements.txt
-</code></pre>
-<h3>Usage</h3>
-<p>Run the project with:</p>
-<p><strong>Using <a href="https://www.docker.com/">docker</a>:</strong></p>
-<pre><code class="language-sh">docker run -it {image_name}
-</code></pre>
-<p><strong>Using <a href="https://www.npmjs.com/">npm</a>:</strong></p>
-<pre><code class="language-sh">npm start
-</code></pre>
-<p><strong>Using <a href="https://pypi.org/project/pip/">pip</a>:</strong></p>
-<pre><code class="language-sh">python {entrypoint}
-</code></pre>
-<h3>Testing</h3>
-<p>Fs_burgeramt-slot-finder uses the {<strong>test_framework</strong>} test framework. Run the test suite with:</p>
-<p><strong>Using <a href="https://www.docker.com/">docker</a>:</strong></p>
-<pre><code class="language-sh">echo 'INSERT-TEST-COMMAND-HERE'
-</code></pre>
-<p><strong>Using <a href="https://www.npmjs.com/">npm</a>:</strong></p>
-<pre><code class="language-sh">npm test
-</code></pre>
-<p><strong>Using <a href="https://pypi.org/project/pip/">pip</a>:</strong></p>
-<pre><code class="language-sh">pytest
-</code></pre>
-<hr>
-<div align="left" class=""><a href="#top">⬆ Return</a></div>
-<hr></div></div></div></div><div data-state="inactive" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-:r10:-trigger-edit" hidden="" id="radix-:r10:-content-edit" tabindex="0" class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"></div></div></div></div>
+  <h1>🏛️ Burgeramt Slot Finder</h1>
+
+
+  <div class="badges">
+    <img src="https://img.shields.io/badge/Frontend-Vercel-blue?logo=vercel" alt="Frontend Vercel Badge" />
+    <img src="https://img.shields.io/badge/Backend-Render-green?logo=render" alt="Backend Render Badge" />
+    <img src="https://img.shields.io/badge/Bot-AWS_ECS-orange?logo=amazon-aws" alt="Bot AWS ECS Badge" />
+    <img src="https://img.shields.io/badge/CI/CD-GitHub_Actions-black?logo=github-actions" alt="GitHub Actions Badge" />
+    <img src="https://img.shields.io/badge/Stack-FastAPI_+_React_+_Vite-purple?logo=fastapi" alt="Stack Badge" />
+        <img src="https://img.shields.io/badge/Text_Simplifier-OpenAI-8A2BE2?logo=openai" alt="OpenAI Badge" />
+  </div>
+  <br/>
+  <p>A full-stack web application designed to simplify the process of finding appointment slots at German Burgerämter (citizen offices). It integrates real-time slot monitoring, Telegram bot alerts, and a text simplification API to decode bureaucratic language — making German administration more accessible.</p>
+
+  <h2>🚀 Tech Stack</h2>
+  <ul>
+    <li><strong>Frontend:</strong> React + Vite</li>
+    <li><strong>Backend:</strong> FastAPI</li>
+    <li><strong>Database:</strong> PostgreSQL or SQLite</li>
+    <li><strong>Integrations:</strong> Telegram Bot, OpenAPI (Text Simplifier)</li>
+  </ul>
+
+  <h2>📦 Features</h2>
+  <ul>
+    <li>🔍 <strong>Slot Finder:</strong> Monitors Burgeramt appointment availability in real-time.</li>
+    <li>📲 <strong>Telegram Alerts:</strong> Sends instant notifications when new slots are found.</li>
+    <li>🧠 <strong>Text Simplifier:</strong> Uses OpenAPI to translate complex bureaucratic German into plain language.</li>
+    <li>🌐 <strong>RESTful API:</strong> Clean and documented endpoints for frontend/backend communication.</li>
+    <li>🛡️ <strong>Secure & Performant:</strong> Built with modern frameworks and best practices.</li>
+  </ul>
+
+  <h2>🧠 Text Simplifier (OpenAI)</h2>
+  <p>German bureaucracy often uses long, complex language that can be hard to understand. This app integrates an OpenAI-powered text simplifier that:</p>
+  <ul>
+    <li>Analyzes official Burgeramt descriptions and instructions</li>
+    <li>Returns simplified, plain-language versions for easier comprehension</li>
+    <li>Accessible via both frontend UI and backend API</li>
+    <li>Powered by OpenAI's language model via secure API calls</li>
+  </ul>
+
+  <h2>🛠️ Installation</h2>
+  <h3>1. Clone the repository</h3>
+  <pre><code>git clone https://github.com/Amenkhnisi/FS_Burgeramt-Slot-Finder.git
+cd FS_Burgeramt-Slot-Finder</code></pre>
+
+  <h3>2. Backend Setup (FastAPI)</h3>
+  <pre><code>cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload</code></pre>
+
+  <h3>3. Frontend Setup (React + Vite)</h3>
+  <pre><code>cd frontend
+npm install
+npm run dev</code></pre>
+
+  <h3>4. Telegram Bot Setup</h3>
+  <ul>
+    <li>Create a bot via <a href="https://t.me/BotFather" target="_blank">BotFather</a></li>
+    <li>Add your bot token to the <code>.env</code> file</li>
+    <li>Run the bot service:</li>
+  </ul>
+  <pre><code>python telegram_bot.py</code></pre>
+
+  <h2>📚 API Documentation</h2>
+  <ul>
+    <li>Swagger UI: <code>http://localhost:8000/docs</code></li>
+    <li>Redoc: <code>http://localhost:8000/redoc</code></li>
+  </ul>
+
+  <h2>🧪 Testing</h2>
+  <pre><code>pytest</code></pre>
+
+  <h2>🌍 Deployment Overview</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Platform</th>
+        <th>Deployment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Frontend</strong></td>
+        <td><a href="https://vercel.com" target="_blank">Vercel</a></td>
+        <td>GitHub CI/CD → Vercel</td>
+      </tr>
+      <tr>
+        <td><strong>Backend API</strong></td>
+        <td><a href="https://render.com" target="_blank">Render</a></td>
+        <td>GitHub CI/CD → Render</td>
+      </tr>
+      <tr>
+        <td><strong>Telegram Bot</strong></td>
+        <td>AWS ECS</td>
+        <td>Containerized via GitHub CI/CD</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>🔄 CI/CD Pipeline</h2>
+  <ul>
+    <li>Automated builds and deployments using <strong>GitHub Actions</strong></li>
+    <li>Environment variables managed securely via Vercel, Render, and AWS dashboards</li>
+    <li>Telegram bot containerized and deployed via ECS task definitions</li>
+    <li>Frontend and backend auto-deploy on push to <code>main</code> branch</li>
+  </ul>
+
+  <h2>🌐 Live URLs</h2>
+  <ul>
+    <li><strong>Frontend App:</strong> <a href="https://fs-burgeramt-slot-finder.vercel.app" target="_blank">Frontend URl</a></li>
+    <li><strong>Backend API:</strong> <a href="https://fs-burgeramt-slot-finder.onrender.com/docs" target="_blank">Backend API URL</a></li>
+    <li><strong>Telegram Bot:</strong> Accessible via <code>@BerlinAppointmentapiBot</code> on Telegram</li>
+  </ul>
+
+  <h2>📊 Architecture Diagram</h2>
+  <div class="diagram">
+    <img width="600" height="350"  src="https://copilot.microsoft.com/th/id/BCO.db0e21e7-25c9-4df9-a44b-69ca2f568bd5.png" alt="Architecture Diagram" />
+    <p><em>Diagram: Frontend (Vercel) → Backend (Render) → Database + Telegram Bot (AWS ECS)</em></p>
+  </div>
+
+  <h2>📄 License</h2>
+  <p>This project is licensed under the MIT License. See the <code>LICENSE</code> file for details.</p>
+
+  <h2>🤝 Contributing</h2>
+  <p>Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.</p>
+
+  <h2>📬 Contact</h2>
+  <ul>
+    <li>GitHub: <a href="https://github.com/Amenkhnisi" target="_blank">@Amenkhnisi</a></li>
+    <li>Telegram: <code><img width="150" height="150" alt="image" src="https://github.com/user-attachments/assets/1dd5d0a3-470a-488a-8c6f-af162f54ef08" />
+</code></li>
+  </ul>
+
+  <h2>🌟 Acknowledgments</h2>
+  <ul>
+    <li>German civic tech community</li>
+    <li>FastAPI & React contributors</li>
+    <li>OpenAPI ecosystem</li>
+  </ul>
