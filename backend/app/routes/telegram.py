@@ -38,7 +38,8 @@ def get_my_telegram(user=Depends(get_current_user), db: Session = Depends(get_db
 # Get all users (used by bot scheduler)
 
 
-TELEGRAM_BOT_NAME = "BerlinAppointmentapiBot"
+TELEGRAM_BOT_NAME = os.environ.get(
+    "TELEGRAM_BOT_NAME", "BerlinAppointmentapiBot")
 
 # For debugging - get all registered users
 
