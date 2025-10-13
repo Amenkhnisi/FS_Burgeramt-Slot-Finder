@@ -85,6 +85,11 @@ def custom_redoc_ui(credentials: HTTPBasicCredentials = Depends(verify_credentia
     return get_redoc_html(openapi_url=app.openapi_url, title="Secure Redoc")
 
 
+@app.get("/metrics", include_in_schema=False)
+def custom_redoc_ui(credentials: HTTPBasicCredentials = Depends(verify_credentials)):
+    return get_redoc_html(openapi_url=app.openapi_url, title="Secure metrics")
+
+
 # Rate limiter
 limiter = Limiter(key_func=lambda request: request.client.host)
 app.state.limiter = limiter
