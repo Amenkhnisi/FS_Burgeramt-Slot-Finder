@@ -12,6 +12,10 @@ from app.routes.auth import auth
 from app.services.telegram_bot import process_updates
 from pathlib import Path
 from dotenv import load_dotenv
+from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from starlette.responses import Response
+from datetime import datetime, timezone
+import time
 import os
 
 
@@ -38,6 +42,17 @@ def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
 
 app = FastAPI(title="Bürgeramt Slot Finder",
               redirect_slashes=False, docs_url=None, redoc_url=None)
+
+##  monitoring metrics ##
+
+REQUEST_COUNT = Counter("request_count", "Total number of requests")
+REQUEST_LATENCY = Histogram(
+    "request_latency_seconds", "Request latency in seconds")
+ACTIVE_USERS = Gauge("active_users", "Number of active users")
+ERROR_COUNT = Counter("error_count", "Total number of errors")
+
+# Simulated active users (for demo purposes)
+ACTIVE_USERS.set(5)
 
 
 # Allow frontend origin
@@ -83,6 +98,10 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
         content={"error": "Too many requests, please try later."}
     )
 
+
+# API routes
+
+
 app.include_router(
     appt_router, prefix=f"/{API}")
 app.include_router(
@@ -98,7 +117,47 @@ app.include_router(
 app.include_router(
     summarize.router, prefix=f"/{API}")
 
+# Track metrics middleware
+
+
+@app.middleware("http")
+async def track_metrics(request: Request, call_next):
+    REQUEST_COUNT.inc()
+    start_time = time.time()
+    try:
+        response = await call_next(request)
+    except Exception:
+        ERROR_COUNT.inc()
+        raise
+    duration = time.time() - start_time
+    REQUEST_LATENCY.observe(duration)
+    return response
+
+# Metrics Endpoint
+
+
+@app.get("/metrics")
+def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
+# API status
+start_time = datetime.now(timezone.utc)
+
 
 @app.get("/health", tags=["Health"])
 def health_check():
-    return {"status": "ok"}
+    uptime = datetime.now(timezone.utc) - start_time
+    return {
+        "status": "online",
+        "uptime": str(uptime).split('.')[0],  # Format as HH:MM:SS
+        "version": "v1.0.0",
+        "last_checked": datetime.now(timezone.utc).isoformat() + "Z"
+    }
+
+
+@app.get("/")
+def homepage():
+    return {
+        "message": "Welcome to the FS Burgeramt Slot Finder API — your smart gateway to real-time appointment availability across Berlin's Bürgerämter. Secure, fast, and built for automation."
+    }

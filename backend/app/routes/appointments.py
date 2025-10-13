@@ -3,6 +3,7 @@ from app.services.scraper import scrape_appointments_playwright_sync
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from datetime import datetime, timedelta
+
 import os
 
 
