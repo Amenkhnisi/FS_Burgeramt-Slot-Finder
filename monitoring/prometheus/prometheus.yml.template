@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'fs-burgeramt-slot-finder'
+    metrics_path: /metrics
+    scheme: https
+    static_configs:
+      - targets: ['fs-burgeramt-slot-finder.onrender.com']
+    basic_auth:
+      username: ${PROM_USER}
+      password: ${PROM_PASS}
