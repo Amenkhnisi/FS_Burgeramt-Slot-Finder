@@ -119,6 +119,16 @@ npm run dev</code></pre>
     <li><strong>Backend API:</strong> <a href="https://fs-burgeramt-slot-finder.onrender.com/docs" target="_blank">Backend API URL</a></li>
     <li><strong>Telegram Bot:</strong> Accessible via <code>@BerlinAppointmentapiBot</code> on Telegram</li>
   </ul>
+  <h2> Screenshots </h2>
+<img width="500" height="600" alt="Screenshot 2026-01-07 151012" src="https://github.com/user-attachments/assets/1f86a214-0fec-4f9f-a542-936e31638288" />
+<img width="500" height="600" alt="Screenshot 2026-01-07 151105" src="https://github.com/user-attachments/assets/b81a5ca3-8791-4d1e-b27e-7938b5d415ad" />
+<img width="500" height="600" alt="Screenshot 2026-01-07 151258" src="https://github.com/user-attachments/assets/89b90e10-b598-4561-8617-7750e543c516" />
+<img width="500" height="600" alt="Screenshot 2026-01-07 151415" src="https://github.com/user-attachments/assets/29400466-285a-4106-bc09-b8475192b898" />
+<img width="500" height="600" alt="Screenshot 2026-01-07 151527" src="https://github.com/user-attachments/assets/fed1758f-2e44-44d0-9cbe-bd32dc9a3ce8" />
+<img width="500" height="600" alt="Screenshot 2026-01-07 154145" src="https://github.com/user-attachments/assets/460af52f-e6e7-49b1-a1fb-4dfb3d9a01b9" />
+<img width="500" height="600" alt="Screenshot 2026-01-07 152541" src="https://github.com/user-attachments/assets/a1d222e0-4871-457f-9915-644e32ecf0b5" />
+<img width="500" height="750" alt="Screenshot 2026-01-07 154307" src="https://github.com/user-attachments/assets/2cda6539-c27b-4df3-8f55-13ec16103793" />
+
 
   <h2>📊 Architecture Diagram</h2>
   <div class="diagram">
@@ -145,4 +155,5 @@ npm run dev</code></pre>
     <li>FastAPI & React contributors</li>
     <li>OpenAPI ecosystem</li>
   </ul>
+
 
