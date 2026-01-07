@@ -89,12 +89,12 @@ npm run dev</code></pre>
     <tbody>
       <tr>
         <td><strong>Frontend</strong></td>
-        <td><a href="https://vercel.com" target="_blank">Vercel</a></td>
+        <td><a href="https://fs-burgeramt-slot-finder.vercel.app" target="_blank">Vercel</a></td>
         <td>GitHub CI/CD → Vercel</td>
       </tr>
       <tr>
         <td><strong>Backend API</strong></td>
-        <td><a href="https://render.com" target="_blank">Render</a></td>
+        <td><a href="https://fs-burgeramt-slot-finder.onrender.com" target="_blank">Render</a></td>
         <td>GitHub CI/CD → Render</td>
       </tr>
       <tr>
@@ -145,3 +145,4 @@ npm run dev</code></pre>
     <li>FastAPI & React contributors</li>
     <li>OpenAPI ecosystem</li>
   </ul>
+
